@@ -4,6 +4,7 @@ var colors = require("colors");
 var logutils = require("../utils/logutils.js");
 //mosquitto test
 var mosquittotest = require("./mosquittotest.js");
+var mongotest = require("./mongotest.js");
 //read the configuration file
 fs.readFile("../config/config.json",function(err,data){
 	try{
@@ -29,6 +30,14 @@ fs.readFile("../config/config.json",function(err,data){
 
 	}else logutils.endAll("Config file doesn't contain mosquitto server host");
 	//success//
+
+	//test mongo
+	var mongohost = config['MONGO_HOST'];
+	if(mongohost){
+		mongotest.testMongo(mongohost);
+	}else{
+		logutils.endAll("Couldn't connect to mongo db");
+	}
 	
 }catch(cerr){
 	logutils.endAll("Error reading config file:"+cerr);
