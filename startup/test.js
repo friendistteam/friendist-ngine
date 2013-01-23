@@ -15,12 +15,31 @@ fs.readFile("../config/config.json",function(err,data){
 	if(err){
 		//Found error in reading configuration
 		var s = "Error reading config file"+err;
-		console.log(s.red);
-
+		endAll(s);
 	}
 }
 //Exits the process of testing with error
 var endAll(s){
-	console.log(s.red);
-	console.log("Friendistngine".inverse+" is closing now");
+	alert(s);
+	process.exit(1);
+
 }
+//for logging utilites  <----
+var warn = function(s){
+	filelogger.warn({msg:s});
+	consolelogger.warn({msg:s});
+};
+
+var debug = function(s){
+	filelogger.debug({msg:s});
+	consolelogger.debug({msg:s});
+};
+var alert = function(s){
+	filelogger.alert({msg:s});
+	consolelogger.alert({msg:s});
+};
+var info = function(s){
+	filelogger.info({msg:s});
+	consolelogger.info({msg:s});
+};
+//End of logging utility ---->
