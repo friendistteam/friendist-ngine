@@ -1,0 +1,6 @@
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Mosquitto at:localhost:1883  timeout:2000
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Connecting to mosquitto server..
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Testing subscribe..
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Publishing a sample packet..
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Recieved the packet..
+[INFO:Wed Jan 23 2013 12:20:17 GMT+0200 (EET) ]:Mosquitto test Passed !

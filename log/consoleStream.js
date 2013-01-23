@@ -26,7 +26,3 @@ if ((typeof type == 'undefined') || (typeof date == 'undefined')
 };
 }
 }
-process.on('exit', function() {
-	console.log("welcome");
-	this.writestream.end();
-});

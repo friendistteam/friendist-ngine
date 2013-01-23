@@ -1,15 +1,7 @@
 var fs = require("fs");
 var colors = require("colors");
-var largeFileStream = require("../log/fileStream.js");
-var consoleStreammodule = require("../log/consoleStream.js");
-//
-var LargeFileStream = new largeFileStream(".",1024*1024*10);
-var consoleStream = new consoleStreammodule();
-//get the logger
-var loggermodule = require("../log/log.js");
-var filelogger = new loggermodule(LargeFileStream);
-var consolelogger = new loggermodule(consoleStream);
-
+//log utils
+var logutils = require("../utils/logutils.js");
 //mosquitto test
 var mosquittotest = require("./mosquittotest.js");
 //read the configuration file
@@ -19,31 +11,39 @@ fs.readFile("../config/config.json",function(err,data){
 		if(err){
 		//Found error in reading configuration
 		var s = "Error reading config file"+err;
-		endAll(s);
+		logutils.endAll(s);
 	}
 	var host = config['MQTT_HOST'];
 	var port = config['MQTT_PORT'];
 	var timeout = config['MQTT_TEST_TIMEOUT_MILLISECONDS'];
+	logutils.info("Mosquitto at:"+host+":"+port+"  timeout:"+timeout);
+	//mosquittotest.testMosquitto(port,host,timeout,logutils.endAll,warn,debug,alert,info);
 	if(host){
 		if(port){
 			if(timeout){
-				mosquittotest.testMosquitto(port,host,timeout,endAll,warn,debug,alert,info);
-
+				mosquittotest.testMosquitto(port,host,timeout);
 
 			}else ("config file doesn't contain mosquitto server timeout");
 
-		}endAll("Config file doesn't contain mosquitto server port");
+		}else logutils.endAll("Config file doesn't contain mosquitto server port");
 
-	}else endAll("Config file doesn't contain mosquitto server host");
+	}else logutils.endAll("Config file doesn't contain mosquitto server host");
+	//success//
+	
 }catch(cerr){
-	endAll("Error reading config file"+cerr);
+	logutils.endAll("Error reading config file:"+cerr);
 }
 
 });
-//Exits the process of testing with error
-var endAll = function(s){
+/*
+var logutils.endAll = function(s){
 	alert(s);
+	filelogger.close();
+	consolelogger.close();
 	process.exit(1);
+}
+var pass =function(){
+	console.log("Test passed successfully!".green);
 }
 //for logging utilites  <----
 var warn = function(s){
@@ -62,5 +62,4 @@ var alert = function(s){
 var info = function(s){
 	filelogger.info({msg:s});
 	consolelogger.info({msg:s});
-};
-//End of logging utility ---->
+};*/

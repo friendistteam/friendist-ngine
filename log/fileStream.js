@@ -45,7 +45,3 @@ if (this.writestream.bytesWritten == this.length) {
 }
 }
 };
-process.on('exit', function() {
-	console.log("welcome");
-	this.writestream.end();
-});

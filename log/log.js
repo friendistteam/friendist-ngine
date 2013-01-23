@@ -38,6 +38,8 @@ Logger.prototype = {
 		this.save('ALERT', msg);
 	},
 	close : function() {
-		this.stream.close();
+		if(this.stream.close){
+			this.stream.close();
+		}
 	}
 };
