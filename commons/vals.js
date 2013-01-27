@@ -7,13 +7,20 @@ client.on("error",function(err){
 });
 exports.save = function(key,val){
 	if(client){
-		if(key &&val ){
+		if(key && val ){
 			client.set(key,val);
-			logutils.alert("Key/value is empty");
-		}
+			logutils.info("Saved for key:"+key);
+		}else logutils.alert("Key/value is empty");
 	}
 }
-
+exports.getValues = function(keys,next){
+	if(keys && next){
+		client.mget(keys,function(err,reply){
+			if(err)logutils.alert(err);
+			next(reply);
+		});
+	}
+};
 exports.getValue = function(key,next){
 	if(key && next){
 		client.get(key,function(err,val){
@@ -26,3 +33,4 @@ exports.getValue = function(key,next){
 exports.close = function(){
 	client.end();
 }
+
