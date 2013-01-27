@@ -16,7 +16,7 @@ exports.save = function(key,val){
 exports.getValues = function(keys,next){
 	if(keys && next){
 		client.mget(keys,function(err,reply){
-			if(err)logutils.alert(err);
+			if(err)logutils.alert("Get values:"+err);
 			next(reply);
 		});
 	}
@@ -24,7 +24,7 @@ exports.getValues = function(keys,next){
 exports.getValue = function(key,next){
 	if(key && next){
 		client.get(key,function(err,val){
-			if(err)logutils.alert(err);
+			if(err)logutils.alert("GEt value error:"+err);
 			else if(val)next(val);
 			else logutils.alert("Value for key:"+key+" , not set");
 		});

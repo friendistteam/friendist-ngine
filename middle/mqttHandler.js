@@ -6,7 +6,7 @@ var logutils = require("../utils/logutils.js");
 var ARGS = [constants.MQTT_HOST,constants.MQTT_PORT,constants.MQTT_Username,constants.MQTT_Password];
 var mqttclient;
 //Getting host,port ,user and password
-vals.getValue(ARGS,createClient);
+vals.getValues(ARGS,createClient);
 function createClient(list){
         //Called when the values are recieved
         var host = list[0];
@@ -16,7 +16,7 @@ function createClient(list){
         //creating an mqtt publisher
         mqtt.createClient(port, host, function(err, client) {
                 if (err)
-                        logutils.endAll(err);
+                        logutils.endAll("Error mqtt client:"+err);
                 client.connect({
                         keepalive : 3000,
                         username : username,
@@ -27,13 +27,12 @@ function createClient(list){
                         // client.disconnect();
                         mqttclient = client;
                 } else {
-                        console.log('connack error %d', packet.returnCode);
-                        process.exit(-1);
+                        logutils.endAll("Connection error : MQTT connection failed");
                 }
         });
 
                 client.on('error', function(e) {
-                        logutils.endAll(e);
+                        logutils.endAll("MQTTCLient error:"+e);
                 });
                 client.request = function(e) {
                         var id = e['id'];
@@ -61,4 +60,7 @@ exports.push = function(id, payload) {
                 return -1;
         }
 
+}
+exports.close = function(){
+        client.disconnect();
 }
