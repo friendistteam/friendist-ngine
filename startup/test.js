@@ -16,6 +16,7 @@ fs.readFile("../config/config.json",function(err,data){
 	}
 	var host = config['MQTT_HOST'];
 	var port = config['MQTT_PORT'];
+	
 	var timeout = config['MQTT_TEST_TIMEOUT_MILLISECONDS'];
 	logutils.info("Mosquitto at:"+host+":"+port+"  timeout:"+timeout);
 	//mosquittotest.testMosquitto(port,host,timeout,logutils.endAll,warn,debug,alert,info);

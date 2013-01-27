@@ -1,6 +1,7 @@
 var fs = require("fs");
 var colors = require("colors");
-var vars = require("../commons/vars.js")
+var vals = require("../commons/vals.js");
+var constants = require("../commons/constants.js");
 //log utils
 var logutils = require("../utils/logutils.js");
 
@@ -15,9 +16,17 @@ fs.readFile("../config/config.json",function(err,data){
 	}
 	var host = config['MQTT_HOST'];
 	var port = config['MQTT_PORT'];
+	var username = config['MQTT_Username'];
+	var password = config['MQTT_Password'];
 	var timeout = config['MQTT_TEST_TIMEOUT_MILLISECONDS'];
 	logutils.info("Initializing Mosquitto configurations");
-	
+	if(!host || !port || !username || !password || !timeout)logutils.endAll("Missing mosquitton configurations");
+	else{
+		vals.save(constants.MQTT_HOST,host);
+		vals.save(constants.MQTT_Username,username);
+		vals.save(constants.MQTT_Password,password);
+	}
+	vals.close();
 }catch(cerr){
 	logutils.endAll("Error reading config file:"+cerr);
 }
